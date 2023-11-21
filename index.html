@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remover Duplicados</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/diff-match-patch@1.0.5/index.min.js"></script>
+</head>
+
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+
+    <div class="relative bg-white p-8 rounded-xl shadow-md space-y-4 xl:w-2/5 sm:w-3/5 w-5/6">
+        <div class="block text-center">
+            <textarea id="inputText1" rows="15" class="w-2/5 p-2 border rounded-md"></textarea>
+            <textarea id="inputText2" rows="15" class="w-2/5 p-2 border rounded-md"></textarea>
+        </div>
+        <div class="flex justify-center">
+            <button onclick="clean()"
+                class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 focus:outline-none mx-5">Limpiar</button>
+            <button onclick="showDifferences()"
+                class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none mx-5">Mostrar
+                direfencias</button>
+        </div>
+        <div id="differences" class="h-64 overflow-auto"></div>
+
+        </div>
+
+    </div>
+    <script>
+
+        function clean() {
+            document.getElementById('inputText1').value = '';
+            document.getElementById('inputText2').value = '';
+            document.getElementById('differences').innerHTML = '';
+        }
+        function showDifferences() {
+            var text1 = document.getElementById('inputText1').value;
+            var text2 = document.getElementById('inputText2').value;
+
+            var dmp = new diff_match_patch();
+            var diff = dmp.diff_main(text1, text2);
+            dmp.diff_cleanupSemantic(diff);
+
+            var diffHtml = dmp.diff_prettyHtml(diff);
+            document.getElementById('differences').innerHTML = diffHtml;
+        }
+
+    </script>
+
+</body>
+
+</html>
