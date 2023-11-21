@@ -25,17 +25,21 @@
         </div>
         <div id="differences" class="h-64 overflow-auto"></div>
 
+        <span id="countDiffereces" class="hidden">
+        </span>
         </div>
+
 
     </div>
     <script>
-
         function clean() {
             document.getElementById('inputText1').value = '';
             document.getElementById('inputText2').value = '';
             document.getElementById('differences').innerHTML = '';
         }
+
         function showDifferences() {
+            document.getElementById('differences').innerHTML = '';
             var text1 = document.getElementById('inputText1').value;
             var text2 = document.getElementById('inputText2').value;
 
@@ -45,8 +49,16 @@
 
             var diffHtml = dmp.diff_prettyHtml(diff);
             document.getElementById('differences').innerHTML = diffHtml;
-        }
 
+            var count = 0;
+            for (var i = 0; i < diff.length; i++) {
+                if (diff[i][0] == 1) {
+                    count++;
+                }
+            }
+            document.getElementById('countDiffereces').innerHTML = 'Diferencias: ' + count;
+            document.getElementById('countDiffereces').classList.remove('hidden');
+        }
     </script>
 
 </body>
